@@ -10,14 +10,29 @@ def findNextEmpty(puzzle):
 
 def isValid(puzzle, guess, row, col):
 
-    rowValues = puzzle[row] 
+    rowValues = puzzle[row] #gets the values in the specifies row
     if guess in rowValues:
         return False
     
     colvalues = []
-    for i in range(9):
-        colvalues.append(puzzle[i][col])
-    return True
+    for i in range(9): #iterates thru each row
+        colvalues.append(puzzle[i][col]) #adds the value at column call to list
+    if guess in colvalues:
+        return False
+    
+    #the square matrix:
+
+    #find top left corner of grid
+    rowStart = (row //3) *3 #finds which of the 3 subgrids the row and columsn r in
+    #*3 gives it the starting index of the sub grid
+    colStart = (col //3) *3
+
+    for r in range(rowStart, rowStart+3):
+        for c in range(colStart, colStart+3):
+            if puzzle[r][c] == guess:
+                return False
+            
+    return True #valid guess
 
 def solveSudoku(puzzle):
     #mutates puzzle to be the solution if a solution exists
