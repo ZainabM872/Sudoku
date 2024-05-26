@@ -46,3 +46,33 @@ def solveSudoku(puzzle):
     for guess in range(1, 10):
         #3: check if this is a valid guess
         if (isValid(puzzle, guess, row, col)):
+            #place guess on puzzle
+            puzzle[row][col] = guess
+
+            #4: call function recursively
+            if(solveSudoku(puzzle)):
+                return True #we solved the puzzle
+            
+        #5: if not valid or guess doesnt solve puzzle, backtrack and try a new number
+        puzzle[row][col] = -1 #reset the guess
+
+    #6: if none of the numbers we try work, the puzzle is unsolvable
+    return False
+
+if __name__ == '__main__':
+    example_board = [
+        [3, 9, -1,   -1, 5, -1,   -1, -1, -1],
+        [-1, -1, -1,   2, -1, -1,   -1, -1, 5],
+        [-1, -1, -1,   7, 1, 9,   -1, 8, -1],
+
+        [-1, 5, -1,   -1, 6, 8,   -1, -1, -1],
+        [2, -1, 6,   -1, -1, 3,   -1, -1, -1],
+        [-1, -1, -1,   -1, -1, -1,   -1, -1, 4],
+
+        [5, -1, -1,   -1, -1, -1,   -1, -1, -1],
+        [6, 7, -1,   1, -1, 5,   -1, 4, -1],
+        [1, -1, 9,   -1, -1, -1,   2, -1, -1]
+    ]
+
+print(solveSudoku(example_board))
+print(example_board)
